@@ -1,3 +1,26 @@
+// user-info.js  (full updated file)
+
+// ✅ Firebase imports & config
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+// 🔹 Your existing Firebase config (replace with your actual keys)
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+// 🔹 Initialize
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+// 🔹 Existing DOM references
 const addMemberBtn = document.getElementById("add-member-btn");
 const membersContainer = document.getElementById("members-container");
 const submitBtn = document.getElementById("submit-btn");
@@ -17,39 +40,37 @@ addMemberBtn.addEventListener("click", () => {
 });
 
 // 🔹 Submit members
-submitBtn.addEventListener("click", (e) => {
+submitBtn.addEventListener("click", async (e) => {
   e.preventDefault();
 
-  const userId = localStorage.getItem("userId") || "guest";
+  const userId = auth.currentUser?.uid || localStorage.getItem("userId") || "guest";
 
   const members = [];
   membersContainer.querySelectorAll(".member-card").forEach(card => {
     const member = {
+      userId,
       name: card.querySelector('input[name="name"]').value,
       gender: card.querySelector('select[name="gender"]').value,
       age: card.querySelector('input[name="age"]').value,
       workout_time: card.querySelector('select[name="workout_time"]').value,
       medical: card.querySelector('input[name="medical"]').value,
-      userId
+      createdAt: serverTimestamp()
     };
     members.push(member);
   });
 
-  // 🔹 Save members in localStorage for shedule.html
-  localStorage.setItem("members", JSON.stringify(members));
+  // ✅ Save each member to Firestore
+  try {
+    for (const m of members) {
+      await addDoc(collection(db, "members"), m);
+    }
+    alert("✅ Members saved to Firestore!");
 
-  console.log("Members ready for backend:", members);
-
-  alert("✅ Members saved! Now go to Schedule page.");
-
-  // Optional: redirect to schedule page
-  window.location.href = "shedule.html";
-
-  // 🔹 Optional: If you have backend ready, you can send members directly
-  // fetch("http://localhost:5000/api/save-members", {
-  //   method: "POST",
-  //   headers: { "Content-Type": "application/json" },
-  //   body: JSON.stringify(members)
-  // });
+    // Optional: also keep local copy and redirect
+    localStorage.setItem("members", JSON.stringify(members));
+    window.location.href = "shedule.html";
+  } catch (err) {
+    console.error("Error saving members:", err);
+    alert("❌ Failed to save members. Check console.");
+  }
 });
-
