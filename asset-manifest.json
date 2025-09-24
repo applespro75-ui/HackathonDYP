@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/HackathonDYP/static/css/main.076f7ed7.css",
+    "main.js": "/HackathonDYP/static/js/main.03575491.js",
+    "static/js/453.2291aba8.chunk.js": "/HackathonDYP/static/js/453.2291aba8.chunk.js",
+    "index.html": "/HackathonDYP/index.html",
+    "main.076f7ed7.css.map": "/HackathonDYP/static/css/main.076f7ed7.css.map",
+    "main.03575491.js.map": "/HackathonDYP/static/js/main.03575491.js.map",
+    "453.2291aba8.chunk.js.map": "/HackathonDYP/static/js/453.2291aba8.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.076f7ed7.css",
+    "static/js/main.03575491.js"
+  ]
+}
