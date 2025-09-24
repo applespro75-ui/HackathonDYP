@@ -44,6 +44,14 @@
             animation: fadeIn 0.8s ease-out;
             animation-fill-mode: forwards;
         }
+          try {
+    const response = await fetch("https://fitness-backend.onrender.com/api/generate-plan", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ members, preferences })
+    });
+
+        
     </style>
 </head>
 <body class="bg-[#121212] text-white flex items-center justify-center min-h-screen">
