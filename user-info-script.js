@@ -4,12 +4,13 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth
 
 // Replace with your Firebase config
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyCyMUrKQNX6-clW4wsaDiDeGC4HRdJfvrE",
+  authDomain: "hackathon-app-c790e.firebaseapp.com",
+  projectId: "hackathon-app-c790e",
+  storageBucket: "hackathon-app-c790e.firebasestorage.app",
+  messagingSenderId: "563910612296",
+  appId: "1:563910612296:web:103b49f5874e62c4928f7d",
+  measurementId: "G-GJX9RZNG16"
 };
 
 const app = initializeApp(firebaseConfig);
