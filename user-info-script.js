@@ -1,42 +1,55 @@
-const addMemberBtn = document.getElementById('add-member-btn');
-const membersContainer = document.getElementById('members-container');
-const submitBtn = document.getElementById('submit-btn');
-const template = document.getElementById('member-template').content;
+const addMemberBtn = document.getElementById("add-member-btn");
+const membersContainer = document.getElementById("members-container");
+const submitBtn = document.getElementById("submit-btn");
+const memberTemplate = document.getElementById("member-template");
 
-let memberCount = 0;
-
-// Add new member card
-addMemberBtn.addEventListener('click', () => {
-  const clone = document.importNode(template, true);
-  clone.querySelector('h3').textContent = `Member ${memberCount + 1}`;
-
-  // Remove member
-  clone.querySelector('.remove-member-btn').addEventListener('click', (e) => {
-    e.target.parentElement.remove();
-  });
-
+// 🔹 Add new member card
+addMemberBtn.addEventListener("click", () => {
+  const clone = memberTemplate.content.cloneNode(true);
   membersContainer.appendChild(clone);
-  memberCount++;
+
+  // Attach remove button event
+  membersContainer.querySelectorAll(".remove-member-btn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.target.closest(".member-card").remove();
+    });
+  });
 });
 
-// Submit form
-submitBtn.addEventListener('click', () => {
-  const members = [];
-  const cards = membersContainer.querySelectorAll('.member-card');
+// 🔹 Submit members
+submitBtn.addEventListener("click", (e) => {
+  e.preventDefault();
 
-  cards.forEach(card => {
+  const userId = localStorage.getItem("userId") || "guest";
+
+  const members = [];
+  membersContainer.querySelectorAll(".member-card").forEach(card => {
     const member = {
       name: card.querySelector('input[name="name"]').value,
       gender: card.querySelector('select[name="gender"]').value,
       age: card.querySelector('input[name="age"]').value,
       workout_time: card.querySelector('select[name="workout_time"]').value,
-      medical: card.querySelector('input[name="medical"]').value
+      medical: card.querySelector('input[name="medical"]').value,
+      userId
     };
     members.push(member);
   });
 
-  console.log('Submitted Members:', members);
+  // 🔹 Save members in localStorage for shedule.html
+  localStorage.setItem("members", JSON.stringify(members));
 
-  // TODO: Send `members` array to backend API via fetch/axios
-  alert('Members submitted! Check console for details.');
+  console.log("Members ready for backend:", members);
+
+  alert("✅ Members saved! Now go to Schedule page.");
+
+  // Optional: redirect to schedule page
+  window.location.href = "shedule.html";
+
+  // 🔹 Optional: If you have backend ready, you can send members directly
+  // fetch("http://localhost:5000/api/save-members", {
+  //   method: "POST",
+  //   headers: { "Content-Type": "application/json" },
+  //   body: JSON.stringify(members)
+  // });
 });
+
