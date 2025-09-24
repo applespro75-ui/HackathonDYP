@@ -259,6 +259,13 @@
             const menuBtn = document.getElementById('menu-btn');
             // Mobile menu implementation here
         });
+
+          try {
+    const response = await fetch("https://fitness-backend.onrender.com/api/generate-plan", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ members, preferences })
+    });
     </script>
 
     <script type="module">
