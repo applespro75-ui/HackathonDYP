@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Spark Fitness - Progress</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      padding-bottom: 60px; /* space for bottom nav */
+      overflow-y: scroll; /* Makes the page scrollable */
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1rem;
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    .glass-card:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      margin-bottom: 2rem;
+    }
+    header .logo-section {
+      display: flex;
+      align-items: center;
+    }
+    header .logo-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(90deg, #7c3aed, #3b82f6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 1rem;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #7c3aed, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+    }
+    .header-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+    .header-buttons a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .header-buttons a .glass-card {
+      width: 48px;
+      height: 48px;
+      justify-content: center;
+      border-radius: 50%;
+      padding: 0;
+    }
+    .bottom-tabs {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #111;
+      border-top: 1px solid #333;
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0;
+      z-index: 50;
+    }
+    .tab-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #888;
+      text-decoration: none;
+      font-size: 12px;
+      transition: color 0.3s ease;
+    }
+    .tab-btn:hover {
+      color: #60a5fa; /* Tailwind blue-400 */
+    }
+    .tab-btn.active {
+      color: #60a5fa;
+    }
+    .tab-btn i {
+      margin-bottom: 4px;
+    }
+    .container {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    /* Section Styles */
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    .stat-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1rem;
+      padding: 1.5rem;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #7c3aed, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .stat-label {
+      font-size: 0.875rem;
+      color: #ccc;
+      margin-top: 0.25rem;
+    }
+    .pr-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-section">
+      <div class="logo-circle">
+        <i data-feather="bolt" class="text-white"></i>
+      </div>
+      <h1>Spark Fitness</h1>
+    </div>
+    <div class="header-buttons">
+      <a href="#" aria-label="Profile">
+        <div class="glass-card">
+          <i data-feather="user"></i>
+        </div>
+      </a>
+      <a href="#" aria-label="Settings">
+        <div class="glass-card">
+          <i data-feather="settings"></i>
+        </div>
+      </a>
+    </div>
+  </header>
+
+  <div class="container">
+    <h2 class="text-2xl font-bold">Your Progress</h2>
+    <p class="text-sm text-gray-400">Track your journey and celebrate your milestones.</p>
+
+    <div class="section-title">Workout Consistency</div>
+    <div class="glass-card p-4">
+      <div class="w-full aspect-video flex flex-col items-center justify-center text-gray-500">
+        <i data-feather="bar-chart-2" class="w-16 h-16 mb-4"></i>
+        <p>Graph data will be displayed here.</p>
+        <p class="text-xs">This Week vs Last Week</p>
+      </div>
+    </div>
+
+    <div class="section-title">Key Stats</div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value">25</div>
+        <div class="stat-label">Workouts</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">6</div>
+        <div class="stat-label">Badges</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">1200</div>
+        <div class="stat-label">Min. Active</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">15k</div>
+        <div class="stat-label">Calories Burned</div>
+      </div>
+    </div>
+    
+    <div class="section-title">Personal Records 💪</div>
+    <div class="pr-section">
+      <div class="pr-item">
+        <div>
+          <span class="font-semibold text-lg">Deadlift</span>
+          <p class="text-sm text-gray-400">1 Rep Max</p>
+        </div>
+        <span class="text-lg font-bold text-green-400">225 lbs</span>
+      </div>
+      <div class="pr-item">
+        <div>
+          <span class="font-semibold text-lg">Push-ups</span>
+          <p class="text-sm text-gray-400">Total in 1 Set</p>
+        </div>
+        <span class="text-lg font-bold text-green-400">50 reps</span>
+      </div>
+      <div class="pr-item">
+        <div>
+          <span class="font-semibold text-lg">Squats</span>
+          <p class="text-sm text-gray-400">3 Reps at</p>
+        </div>
+        <span class="text-lg font-bold text-green-400">185 lbs</span>
+      </div>
+      <div class="pr-item">
+        <div>
+          <span class="font-semibold text-lg">Bench Press</span>
+          <p class="text-sm text-gray-400">1 Rep Max</p>
+        </div>
+        <span class="text-lg font-bold text-green-400">155 lbs</span>
+      </div>
+      <div class="pr-item">
+        <div>
+          <span class="font-semibold text-lg">Plank</span>
+          <p class="text-sm text-gray-400">Longest Hold</p>
+        </div>
+        <span class="text-lg font-bold text-green-400">2 min 30 sec</span>
+      </div>
+    </div>
+
+    <div class="section-title">Workout History</div>
+    <div class="flex flex-col gap-3 pb-8">
+      <div class="glass-card p-4 flex flex-col">
+        <span class="font-semibold text-lg">Strength Training</span>
+        <span class="text-sm text-gray-400">October 21, 2025</span>
+        <ul class="list-disc list-inside text-sm text-gray-300 mt-2">
+          <li>Squats: 3 sets x 8 reps</li>
+          <li>Bench Press: 3 sets x 8 reps</li>
+          <li>Bent-over Rows: 3 sets x 8 reps</li>
+        </ul>
+      </div>
+      <div class="glass-card p-4 flex flex-col">
+        <span class="font-semibold text-lg">Cardio</span>
+        <span class="text-sm text-gray-400">October 20, 2025</span>
+        <ul class="list-disc list-inside text-sm text-gray-300 mt-2">
+          <li>Treadmill Run: 30 min</li>
+          <li>Stair Climber: 15 min</li>
+        </ul>
+      </div>
+      <div class="glass-card p-4 flex flex-col">
+        <span class="font-semibold text-lg">HIIT Session</span>
+        <span class="text-sm text-gray-400">October 18, 2025</span>
+        <ul class="list-disc list-inside text-sm text-gray-300 mt-2">
+          <li>Jump Squats: 4 sets x 12 reps</li>
+          <li>Kettlebell Swings: 4 sets x 15 reps</li>
+        </ul>
+      </div>
+      <div class="glass-card p-4 flex flex-col">
+        <span class="font-semibold text-lg">Yoga & Stretching</span>
+        <span class="text-sm text-gray-400">October 17, 2025</span>
+        <ul class="list-disc list-inside text-sm text-gray-300 mt-2">
+          <li>Warrior II: 3 sets x 30 sec</li>
+          <li>Downward Dog: 3 sets x 30 sec</li>
+        </ul>
+      </div>
+      <div class="glass-card p-4 flex flex-col">
+        <span class="font-semibold text-lg">Strength Training</span>
+        <span class="text-sm text-gray-400">October 15, 2025</span>
+        <ul class="list-disc list-inside text-sm text-gray-300 mt-2">
+          <li>Deadlift: 3 sets x 5 reps</li>
+          <li>Overhead Press: 3 sets x 8 reps</li>
+        </ul>
+      </div>
+      <div class="glass-card p-4 flex flex-col">
+        <span class="font-semibold text-lg">Cardio</span>
+        <span class="text-sm text-gray-400">October 14, 2025</span>
+        <ul class="list-disc list-inside text-sm text-gray-300 mt-2">
+          <li>Cycling: 45 min</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <nav class="bottom-tabs" role="navigation" aria-label="Main navigation">
+    <a href="goals.html" class="tab-btn" aria-label="Home">
+      <i data-feather="home"></i>
+      <span>Home</span>
+    </a>
+    <a href="shedule.html" class="tab-btn" aria-label="Goals">
+      <i data-feather="activity"></i>
+      <span>Goals</span>
+    </a>
+    <a href="badge.html" class="tab-btn" aria-label="Badges">
+      <i data-feather="heart"></i>
+      <span>Badges</span>
+    </a>
+    <a href="progress.html" class="tab-btn active" aria-current="page" aria-label="Progress">
+      <i data-feather="bar-chart-2"></i>
+      <span>Progress</span>
+    </a>
+  </nav>
+
+  <script>
+    feather.replace();
+  </script>
+</body>
+</html>
