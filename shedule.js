@@ -31,8 +31,7 @@ document.getElementById("planForm").addEventListener("submit", async function (e
   console.log("📤 Sending to backend:", { members, preferences });
 
   try {
-    // 🔹 Call backend API
-    const response = await fetch("http://localhost:5000/api/generate-plan", {
+    const response = await fetch("https://fitness-backend.onrender.com/api/generate-plan", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ members, preferences })
