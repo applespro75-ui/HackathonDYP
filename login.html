@@ -153,13 +153,6 @@
 
         googleLoginBtn.addEventListener('click', handleGoogleSignIn);
 
-        // Link to the signup page (you might want to replace '#' with the actual signup page URL)
-        document.getElementById('show-signup').addEventListener('click', (e) => {
-            e.preventDefault();
-            alert('Redirecting to Sign Up page (replace # with actual URL)');
-            // window.location.href = '/signup.html'; // Example of actual redirect
-        });
-
         // Use the initial auth token if available
         if (typeof __initial_auth_token !== 'undefined') {
             signInWithCustomToken(auth, __initial_auth_token).catch((error) => {
