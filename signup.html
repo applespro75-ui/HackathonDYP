@@ -14,21 +14,13 @@
             overflow-x: hidden;
         }
 
-        /* Keyframes for fade-in animation */
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Glass morphism style */
         .glass-morphism {
-            background: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(15px) saturate(1.8);
             -webkit-backdrop-filter: blur(15px) saturate(1.8);
             border-radius: 1.5rem;
@@ -36,7 +28,6 @@
             box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.1);
         }
 
-        /* Background gradient with animation */
         @keyframes bg-pan {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -56,14 +47,10 @@
     </style>
 </head>
 <body class="bg-[#121212] text-white flex items-center justify-center min-h-screen">
-    <!-- Main content container -->
     <div class="p-4 md:p-8 flex items-center justify-center relative w-full h-full min-h-screen">
         <div class="absolute inset-0 gradient-bg rounded-3xl m-4 md:m-8"></div>
-        
         <div class="relative w-full max-w-md mx-auto z-10 p-4 md:p-8">
-            <!-- Authentication container -->
             <div id="auth-container" class="glass-morphism p-8 space-y-6 animated-card">
-                <!-- Header with logo and name -->
                 <div class="flex flex-col items-center justify-center space-y-4 mb-8">
                     <a href="#" class="flex items-center space-x-2">
                         <svg class="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -73,7 +60,6 @@
                     <h1 class="text-3xl font-bold">AuraFit AI</h1>
                 </div>
 
-                <!-- Signup Form -->
                 <div id="signup-form" class="animated-form">
                     <h2 class="text-3xl font-bold mb-4">Sign Up</h2>
                     <p class="text-gray-400 mb-6">Create your account and start your wellness journey today.</p>
@@ -109,9 +95,10 @@
     
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        
-        // Firebase configuration - MANDATORY
+        import { getAuth, signInWithCustomToken, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCyMUrKQNX6-clW4wsaDiDeGC4HRdJfvrE",
             authDomain: "hackathon-app-c790e.firebaseapp.com",
@@ -121,16 +108,14 @@
             appId: "1:563910612296:web:103b49f5874e62c4928f7d",
             measurementId: "G-GJX9RZNG16"
         };
-        
-        const __initial_auth_token = '__initial_auth_token';
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
 
         const authContainer = document.getElementById('auth-container');
         const signupFormEl = document.getElementById('signup-form-el');
         const googleSignupBtn = document.getElementById('google-signup-btn');
-        const messageBox = document.getElementById('auth-message-box');
 
         const showMessage = (message, isError = false) => {
             let msgBox = document.createElement('div');
@@ -148,8 +133,19 @@
             const email = signupFormEl['signup-email'].value;
             const password = signupFormEl['signup-password'].value;
             const phone = signupFormEl['signup-phone'].value;
+
             try {
-                await createUserWithEmailAndPassword(auth, email, password);
+                // 1. Create user in Auth
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // 2. Save extra info in Firestore
+                await setDoc(doc(db, "users", user.uid), {
+                    email: email,
+                    phone: phone,
+                    createdAt: serverTimestamp()
+                });
+
                 showMessage('Account created successfully!', false);
             } catch (error) {
                 showMessage(error.message, true);
@@ -161,13 +157,6 @@
         };
 
         googleSignupBtn.addEventListener('click', handleGoogleSignIn);
-
-        // Use the initial auth token if available
-        if (typeof __initial_auth_token !== 'undefined') {
-            signInWithCustomToken(auth, __initial_auth_token).catch((error) => {
-                console.error("Error signing in with custom token:", error);
-            });
-        }
     </script>
 </body>
 </html>
