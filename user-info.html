@@ -54,5 +54,43 @@
   </template>
 
   <script src="user-info-script.js"></script>
+
+  <script>
+    // 🔹 Step 2: Redirect to login if user is not authenticated
+    if (!localStorage.getItem('userId')) {
+      alert('Please log in first!');
+      window.location.href = 'index.html'; // redirect to login page
+    }
+
+    // 🔹 Step 3: Associate member info with logged-in user
+    const submitBtn = document.getElementById('submit-btn');
+    const membersContainer = document.getElementById('members-container');
+
+    submitBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      const userId = localStorage.getItem('userId'); // logged-in user
+
+      const members = [];
+
+      membersContainer.querySelectorAll('.member-card').forEach(card => {
+        const member = {
+          name: card.querySelector('input[name="name"]').value,
+          gender: card.querySelector('select[name="gender"]').value,
+          age: card.querySelector('input[name="age"]').value,
+          workout_time: card.querySelector('select[name="workout_time"]').value,
+          medical: card.querySelector('input[name="medical"]').value,
+          userId: userId // 🔹 associate with logged-in user
+        };
+        members.push(member);
+      });
+
+      console.log('Members to submit:', members);
+
+      // Here you can send 'members' array to backend using fetch/AJAX
+      alert('Members data logged to console. Connect your backend to store in DB.');
+    });
+  </script>
 </body>
 </html>
+
