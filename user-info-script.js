@@ -60,7 +60,7 @@ submitBtn.addEventListener("click", async (e) => {
     }
     alert("✅ Members saved to Firestore!");
     localStorage.setItem("members", JSON.stringify(members));
-    window.location.href = "shedule.html";
+    window.location.href = "interface.html";
   } catch (err) {
     console.error("Error saving members:", err);
     alert("❌ Failed to save members. Check console.");
