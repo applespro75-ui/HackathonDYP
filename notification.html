@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notifications | Spark Fitness</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+<style>
+    body { background: #000; color: #fff; font-family: sans-serif; padding-bottom: 80px; }
+    .notification-card { 
+        background: rgba(255,255,255,0.05); 
+        border: 1px solid rgba(255,255,255,0.1); 
+        backdrop-filter: blur(10px); 
+        margin-bottom: 8px; 
+        padding: 12px; 
+        border-radius: 12px;
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center;
+    }
+    .unseen { background: rgba(0,255,0,0.1); } /* highlight unseen messages */
+</style>
+</head>
+<body>
+<div class="container mx-auto px-4 py-6">
+    <header class="flex items-center mb-6">
+        <a href="settings.html" class="mr-4">
+            <i data-feather="arrow-left"></i>
+        </a>
+        <h1 class="text-2xl font-bold">Notifications</h1>
+    </header>
+
+    <section>
+        <h2 class="text-xl font-semibold mb-4">Unseen</h2>
+        <div class="notification-card unseen">
+            <p>New workout challenge available!</p>
+            <i data-feather="bell"></i>
+        </div>
+        <div class="notification-card unseen">
+            <p>Your friend just joined Spark Fitness!</p>
+            <i data-feather="bell"></i>
+        </div>
+    </section>
+
+    <section class="mt-6">
+        <h2 class="text-xl font-semibold mb-4">Seen</h2>
+        <div class="notification-card">
+            <p>Daily reminder: Complete your workout!</p>
+            <i data-feather="check"></i>
+        </div>
+        <div class="notification-card">
+            <p>Your subscription has been renewed.</p>
+            <i data-feather="check"></i>
+        </div>
+    </section>
+</div>
+
+<script>
+    feather.replace();
+</script>
+</body>
+</html>
