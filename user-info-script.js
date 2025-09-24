@@ -54,6 +54,13 @@ submitBtn.addEventListener("click", async (e) => {
     members.push(member);
   });
 
+    try {
+    const response = await fetch("https://fitness-backend.onrender.com/api/generate-plan", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ members, preferences })
+    });
+
   try {
     for (const m of members) {
       await addDoc(collection(db, "members"), m);
