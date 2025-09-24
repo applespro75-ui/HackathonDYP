@@ -134,18 +134,25 @@
             }, 5000);
         };
 
-        loginFormEl.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = loginFormEl['login-email'].value;
-            const password = loginFormEl['login-password'].value;
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-                showMessage('Logged in successfully!', false);
-                // Redirect or update UI upon successful login
-            } catch (error) {
-                showMessage(error.message, true);
-            }
-        });
+    loginFormEl.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = loginFormEl['login-email'].value;
+    const password = loginFormEl['login-password'].value;
+    try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // 🔹 Store userId in localStorage for user-info page
+        localStorage.setItem('userId', user.uid);
+
+        showMessage('Logged in successfully!', false);
+
+        // 🔹 Redirect to user-info.html after login
+        window.location.href = 'user-info.html';
+    } catch (error) {
+        showMessage(error.message, true);
+    }
+});
 
         const handleGoogleSignIn = () => {
             showMessage("Google Sign-in functionality would be implemented here. This requires a pop-up and cannot be fully demonstrated in this environment.", false);
