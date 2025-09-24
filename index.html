@@ -14,32 +14,66 @@
             overflow-x: hidden;
         }
 
+        /* Keyframes for fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Glass morphism style */
         .glass-morphism {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 2rem;
+            background: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+            backdrop-filter: blur(15px) saturate(1.8);
+            -webkit-backdrop-filter: blur(15px) saturate(1.8);
+            border-radius: 1.5rem;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        /* Specific card for the user profile, with a tinted background */
+        .glass-card-tinted {
+            background: rgba(255, 182, 193, 0.2); /* Semi-transparent pink */
+            backdrop-filter: blur(20px) saturate(1.8);
+            -webkit-backdrop-filter: blur(20px) saturate(1.8);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.1);
+        }
+        
+        .animated-card {
+            animation: fadeIn 0.8s ease-out;
+            animation-fill-mode: forwards;
+        }
+
+        .animated-card-delay-1 {
+            animation-delay: 0.2s;
+        }
+
+        .animated-card-delay-2 {
+            animation-delay: 0.4s;
+        }
+
+        .animated-card-delay-3 {
+            animation-delay: 0.6s;
+        }
+
+        /* Background gradient with animation */
+        @keyframes bg-pan {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .gradient-bg {
-            background-image: url('https://placehold.co/1200x800/d9b4a4/6a4d3f?text=Sunrise+Desert');
-            background-size: cover;
-            background-position: center;
-        }
-
-        .brand-logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .quiz-button {
-            transition: all 0.3s ease;
-        }
-        .quiz-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(225deg, #FF69B4, #4B0082, #1E90FF, #000000, #8A2BE2);
+            background-size: 400% 400%;
+            animation: bg-pan 20s ease infinite;
         }
     </style>
 </head>
@@ -50,13 +84,17 @@
         <div class="lg:w-1/2 p-8 md:p-16 flex flex-col justify-between">
             <!-- Header -->
             <header class="flex justify-between items-center mb-16">
+                <!-- Professional Logo and Name -->
                 <a href="#" class="flex items-center space-x-2">
-                    <img src="https://placehold.co/32x32/1a202c/ffffff?text=S" alt="Logo" class="rounded-full">
-                    <span class="brand-logo text-white">Spark.fitness</span>
+                    <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM12 4C13.4079 4 14.757 4.39867 15.9323 5.12261C17.1076 5.84655 18.0664 6.87707 18.6923 8.11717L12 12V4ZM12 20C10.5921 20 9.24296 19.6013 8.06771 18.8774C6.89246 18.1534 5.93361 17.1229 5.30771 15.8828L12 12L12 20ZM12 12L5.30771 8.11717C5.93361 6.87707 6.89246 5.84655 8.06771 5.12261C9.24296 4.39867 10.5921 4 12 4C13.4079 4 14.757 4.39867 15.9323 5.12261C17.1076 5.84655 18.0664 6.87707 18.6923 8.11717L12 12Z" fill="currentColor"/>
+                    </svg>
+                    <span class="text-white text-2xl font-bold">AuraFit AI</span>
                 </a>
                 <nav class="hidden md:flex items-center space-x-8">
-                    <a href="#" class="text-white hover:text-gray-400 transition-colors duration-200">Skin</a>
-                    <a href="#" class="text-white hover:text-gray-400 transition-colors duration-200">Treatments</a>
+                    <!-- Updated Navigation Links -->
+                    <a href="#" class="text-white hover:text-gray-400 transition-colors duration-200">Plans</a>
+                    <a href="#" class="text-white hover:text-gray-400 transition-colors duration-200">Community</a>
                     <a href="#" class="px-6 py-2 border border-white rounded-full text-white hover:bg-white hover:text-black transition-colors duration-200">Sign in</a>
                 </nav>
                 <div class="md:hidden">
@@ -75,15 +113,15 @@
                     Customised AI Fitness And Weight Loss Companion
                 </h1>
                 <p class="text-lg text-gray-300 mb-8">
-                    No doctor visit needed—just fast, in-person STI testing with results in under 48 hours.
+                    An AI-powered wellness journey. Your personal coach for fitness, nutrition, and mental well-being, designed just for you.
                 </p>
                 
-                <!-- Testimonial section -->
+                <!-- Updated Testimonial section with user badges -->
                 <div class="flex items-center space-x-4 mb-16">
                     <div class="flex items-center -space-x-3">
-                        <img class="w-10 h-10 rounded-full border-2 border-[#121212]" src="https://placehold.co/40x40/667eea/ffffff?text=T" alt="Testimonial user 1">
-                      <img class="w-10 h-10 rounded-full border-2 border-[#121212]" src="https://placehold.co/40x40/68d391/ffffff?text=T" alt="Testimonial user 2">
-                        <img class="w-10 h-10 rounded-full border-2 border-[#121212]" src="https://placehold.co/40x40/fc8181/ffffff?text=T" alt="Testimonial user 3">
+                        <img class="w-10 h-10 rounded-full border-2 border-[#121212]" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300" alt="User Badge 1">
+                        <img class="w-10 h-10 rounded-full border-2 border-[#121212]" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=300" alt="User Badge 2">
+                        <img class="w-10 h-10 rounded-full border-2 border-[#121212]" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=300" alt="User Badge 3">
                     </div>
                     <div>
                         <div class="font-medium text-white">Loved the overall process</div>
@@ -96,27 +134,51 @@
                     </div>
                 </div>
                 
-                <!-- Pricing and CTA section -->
+                <!-- Pricing and CTA section - currency changed -->
                 <div class="flex items-center space-x-4">
                     <div class="flex flex-col">
-                        <span class="text-2xl font-bold text-white">$16</span>
+                        <span class="text-2xl font-bold text-white">₹16</span>
                         <span class="text-sm text-gray-400">First month</span>
-                        <span class="text-sm text-gray-500 line-through">$18/month after first month</span>
+                        <span class="text-sm text-gray-500 line-through">₹18/month after first month</span>
                     </div>
-                    <button class="bg-white text-black font-semibold rounded-full px-8 py-4 quiz-button shadow-lg">
+                    <button class="bg-white text-black font-semibold rounded-full px-8 py-4 shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl">
                         Start Quiz
                     </button>
                 </div>
             </div>
             
-            <!-- Footer logos section -->
+            <!-- Footer logos section - updated with actual gym brands -->
             <div class="mt-16 border-t border-gray-700 pt-8 flex flex-wrap justify-between items-center space-y-4 md:space-y-0">
-                <img src="https://placehold.co/100x40/1a202c/ffffff?text=BRAND" alt="Brand Logo 1" class="h-8 md:h-10 opacity-70">
-                <img src="https://placehold.co/100x40/1a202c/ffffff?text=BRAND" alt="Brand Logo 2" class="h-8 md:h-10 opacity-70">
-                <img src="https://placehold.co/100x40/1a202c/ffffff?text=BRAND" alt="Brand Logo 3" class="h-8 md:h-10 opacity-70">
-                <img src="https://placehold.co/100x40/1a202c/ffffff?text=BRAND" alt="Brand Logo 4" class="h-8 md:h-10 opacity-70">
-                <img src="https://placehold.co/100x40/1a202c/ffffff?text=BRAND" alt="Brand Logo 5" class="h-8 md:h-10 opacity-70">
-                <img src="https://placehold.co/100x40/1a202c/ffffff?text=BRAND" alt="Brand Logo 6" class="h-8 md:h-10 opacity-70">
+                <!-- Cult.fit Logo -->
+                <svg class="h-8 md:h-10 opacity-70" viewBox="0 0 100 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100" height="40" fill="#1A1A1A"/>
+                    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="Inter, sans-serif" font-size="14" fill="#FFFFFF" font-weight="bold">Cult.fit</text>
+                </svg>
+                <!-- Gold's Gym Logo -->
+                <svg class="h-8 md:h-10 opacity-70" viewBox="0 0 100 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100" height="40" fill="#1A1A1A"/>
+                    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="Inter, sans-serif" font-size="14" fill="#FFFFFF" font-weight="bold">Gold's Gym</text>
+                </svg>
+                <!-- F45 Training Logo -->
+                <svg class="h-8 md:h-10 opacity-70" viewBox="0 0 100 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100" height="40" fill="#1A1A1A"/>
+                    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="Inter, sans-serif" font-size="14" fill="#FFFFFF" font-weight="bold">F45</text>
+                </svg>
+                <!-- Anytime Fitness Logo -->
+                <svg class="h-8 md:h-10 opacity-70" viewBox="0 0 100 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100" height="40" fill="#1A1A1A"/>
+                    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="Inter, sans-serif" font-size="14" fill="#FFFFFF" font-weight="bold">Anytime</text>
+                </svg>
+                <!-- Fitness First Logo -->
+                <svg class="h-8 md:h-10 opacity-70" viewBox="0 0 100 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100" height="40" fill="#1A1A1A"/>
+                    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="Inter, sans-serif" font-size="14" fill="#FFFFFF" font-weight="bold">Fitness First</text>
+                </svg>
+                <!-- Powerhouse Gym Logo -->
+                <svg class="h-8 md:h-10 opacity-70" viewBox="0 0 100 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100" height="40" fill="#1A1A1A"/>
+                    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="Inter, sans-serif" font-size="14" fill="#FFFFFF" font-weight="bold">Powerhouse</text>
+                </svg>
             </div>
         </div>
         
@@ -125,13 +187,13 @@
             <div class="absolute inset-0 gradient-bg rounded-3xl m-4 md:m-8"></div>
             
             <div class="relative w-full max-w-md mx-auto z-10 p-4 md:p-8">
-                <div class="absolute top-4 right-4 text-white p-2 rounded-full cursor-pointer">
+                <div class="absolute top-8 right-8 text-white p-2 rounded-full cursor-pointer transition-transform transform hover:scale-110">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </div>
                 
-                <!-- Main glass morphism card -->
-                <div class="glass-morphism p-6 md:p-8 space-y-6">
-                  <!-- User profile section -->
+                <!-- Main glass morphism cards with animations -->
+                <div class="glass-card-tinted p-6 md:p-8 space-y-6 animated-card">
+                    <!-- User profile section -->
                     <div class="flex items-center space-x-4">
                         <img class="w-16 h-16 rounded-full border-2 border-white" src="https://placehold.co/64x64/000000/ffffff?text=J" alt="User Avatar">
                         <div>
@@ -139,100 +201,59 @@
                             <div class="text-sm text-gray-200">23 Yrs • Female / United States</div>
                         </div>
                     </div>
-                    
+                </div>
+                
+                <div class="glass-morphism p-6 md:p-8 space-y-4 mt-6 animated-card animated-card-delay-1">
                     <!-- Goals section -->
-                    <div class="glass-morphism p-4 md:p-6 space-y-4">
-                        <h3 class="text-lg font-semibold mb-2">Goals</h3>
-                        <div class="flex items-center space-x-4">
-                            <div class="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3zM9 13a6 6 0 100-6v6z"></path></svg>
-                            </div>
-                            <div class="flex-grow">
-                                <div class="font-medium">Weight Loss</div>
-                                <div class="text-sm text-gray-200">Description here</div>
-                            </div>
+                    <h3 class="text-lg font-semibold mb-2">Goals</h3>
+                    <div class="flex items-center space-x-4">
+                        <div class="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3zM9 13a6 6 0 100-6v6z"></path></svg>
                         </div>
-                        <div class="flex items-center space-x-4">
-                            <div class="w-10 h-10 bg-green-400 rounded-full flex items-center justify-center">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
-                            </div>
-                            <div class="flex-grow">
-                                <div class="font-medium">Health History</div>
-                                <div class="text-sm text-gray-200">Type-2 Diabetes</div>
-                            </div>
+                        <div class="flex-grow">
+                            <div class="font-medium">Weight Loss</div>
+                            <div class="text-sm text-gray-200">Description here</div>
                         </div>
                     </div>
-                    
+                    <div class="flex items-center space-x-4">
+                        <div class="w-10 h-10 bg-green-400 rounded-full flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                        </div>
+                        <div class="flex-grow">
+                            <div class="font-medium">Health History</div>
+                            <div class="text-sm text-gray-200">Type-2 Diabetes</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="glass-morphism p-6 md:p-8 space-y-4 mt-6 animated-card animated-card-delay-2">
                     <!-- Your Plan section -->
-                    <div class="glass-morphism p-4 md:p-6 space-y-4">
-                        <h3 class="text-lg font-semibold mb-2">Your Plan</h3>
-                        <div class="flex items-center space-x-4">
-                            <div class="w-10 h-10 bg-purple-400 rounded-full flex items-center justify-center">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21H6.737a2 2 0 01-1.789-2.894l3.5-7A2 2 0 0114 10zM21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            </div>
-                            <div class="flex-grow">
-                                <div class="font-medium">GLP-1 Treatment</div>
-                                <div class="text-sm text-gray-200">Base - 2</div>
-                            </div>
-                            <button class="px-3 py-1 bg-gray-600 rounded-full text-sm text-white">
-                                Active
-                            </button>
+                    <h3 class="text-lg font-semibold mb-2">Your Plan</h3>
+                    <div class="flex items-center space-x-4">
+                        <div class="w-10 h-10 bg-purple-400 rounded-full flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21H6.737a2 2 0 01-1.789-2.894l3.5-7A2 2 0 0114 10zM21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         </div>
-                        <div class="flex space-x-2 text-sm text-gray-200">
-                          <button class="px-3 py-1 border border-gray-400 rounded-full">Active</button>
-                            <button class="px-3 py-1 border border-gray-400 rounded-full">Weekly</button>
+                        <div class="flex-grow">
+                            <div class="font-medium">GLP-1 Treatment</div>
+                            <div class="text-sm text-gray-200">Base - 2</div>
                         </div>
+                        <button class="px-3 py-1 bg-gray-600 rounded-full text-sm text-white">
+                            Active
+                        </button>
+                    </div>
+                    <div class="flex space-x-2 text-sm text-gray-200">
+                        <button class="px-3 py-1 border border-gray-400 rounded-full transition-colors hover:bg-white hover:text-black">Active</button>
+                        <button class="px-3 py-1 border border-gray-400 rounded-full transition-colors hover:bg-white hover:text-black">Weekly</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Gym Names Section -->
-    <div class="p-8 md:p-16 bg-[#1a1a1a]">
-        <h2 class="text-3xl font-semibold mb-8 text-white text-center">Local Gyms & Fitness Centers</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <div class="glass-morphism p-6 text-center">
-                <h3 class="font-bold text-lg mb-2">Fitness Central</h3>
-                <p class="text-gray-300">123 Main St, Cityville</p>
-            </div>
-            <div class="glass-morphism p-6 text-center">
-                <h3 class="font-bold text-lg mb-2">Powerhouse Gym</h3>
-                <p class="text-gray-300">456 Oak Ave, Townsville</p>
-            </div>
-            <div class="glass-morphism p-6 text-center">
-                <h3 class="font-bold text-lg mb-2">Zenith Fitness</h3>
-                <p class="text-gray-300">789 Pine Rd, Villageton</p>
-            </div>
-            <div class="glass-morphism p-6 text-center">
-                <h3 class="font-bold text-lg mb-2">Peak Performance</h3>
-                <p class="text-gray-300">101 Elm Blvd, Suburbia</p>
-            </div>
-            <div class="glass-morphism p-6 text-center">
-                <h3 class="font-bold text-lg mb-2">Iron Haven</h3>
-                <p class="text-gray-300">202 Birch Ln, Metropolis</p>
-            </div>
-            <div class="glass-morphism p-6 text-center">
-                <h3 class="font-bold text-lg mb-2">Dynamic Health Club</h3>
-                <p class="text-gray-300">303 Cedar Dr, Central City</p>
-            </div>
-            <div class="glass-morphism p-6 text-center">
-                <h3 class="font-bold text-lg mb-2">The Gym Spot</h3>
-                <p class="text-gray-300">404 Redwood St, Capital City</p>
-            </div>
-            <div class="glass-morphism p-6 text-center">
-                <h3 class="font-bold text-lg mb-2">Unity Strength</h3>
-                <p class="text-gray-300">505 Maple Ave, Portside</p>
-            </div>
-        </div>
-    </div>
     
     <script>
-        // Placeholder for future JavaScript functionality
         document.addEventListener('DOMContentLoaded', () => {
             const menuBtn = document.getElementById('menu-btn');
-            // No mobile menu implementation in this example, but you would add it here.
-            // menuBtn.addEventListener('click', () => { ... });
+            // Mobile menu implementation here
         });
     </script>
 </body>
