@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spark Fitness - AI Fitness Coach</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .gradient-bg {
+            background: #000;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .bottom-tabs {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #000;
+            border-top: 1px solid #333;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+        }
+        .tab-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #888;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        .tab-btn.active {
+            color: #fff;
+        }
+        .tab-btn i {
+            margin-bottom: 4px;
+        }
+        .main-content {
+            padding-bottom: 80px;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen text-white font-sans pb-20">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-10">
+            <div class="flex items-center">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center mr-3">
+                    <i data-feather="bolt" class="text-white"></i>
+                </div>
+                <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">Spark Fitness</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button class="glass-card px-4 py-2 rounded-full flex items-center">
+                    <i data-feather="user" class="mr-2"></i>
+                    <span>Profile</span>
+                </button>
+                <button class="glass-card p-2 rounded-full">
+                    <i data-feather="settings"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Welcome Section -->
+            <section class="mb-10" data-aos="fade-up">
+                <h2 class="text-3xl font-bold mb-2">Welcome back, <span class="text-white">Alex</span>!</h2>
+                <p class="text-gray-300">Your AI coach has prepared today's workout based on your progress.</p>
+            </section>
+
+            <!-- Stats Cards -->
+            <section class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10" data-aos="fade-up">
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-gray-400">Workout Streak</p>
+                            <h3 class="text-2xl font-bold">7 days</h3>
+                        </div>
+                        <div class="p-2 bg-blue-900 bg-opacity-30 rounded-lg">
+                            <i data-feather="trending-up" class="text-blue-400"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-gray-400">Calories Burned</p>
+                            <h3 class="text-2xl font-bold">1,240</h3>
+                        </div>
+                        <div class="p-2 bg-purple-900 bg-opacity-30 rounded-lg">
+                            <i data-feather="activity" class="text-purple-400"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-gray-400">Points Earned</p>
+                            <h3 class="text-2xl font-bold">850</h3>
+                        </div>
+                        <div class="p-2 bg-green-900 bg-opacity-30 rounded-lg">
+                            <i data-feather="award" class="text-green-400"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI Chatbot -->
+            <div class="glass-card p-6 rounded-xl mb-10" data-aos="fade-up">
+                <div class="flex items-start mb-4">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center mr-3">
+                        <i data-feather="message-square" class="text-white"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold">Spark AI Coach</h3>
+                        <p class="text-gray-400 text-sm">How can I help with your fitness today?</p>
+                    </div>
+                </div>
+                <div class="chat-messages mb-4 h-40 overflow-y-auto">
+                    <div class="flex mb-3">
+                        <div class="bg-gray-800 bg-opacity-50 p-3 rounded-lg max-w-xs">
+                            <p>Hi Alex! Ready for today's workout?</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex">
+                    <input type="text" placeholder="Message your AI coach..." 
+                        class="flex-1 bg-gray-800 bg-opacity-50 border border-gray-700 rounded-l-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button class="bg-gradient-to-r from-blue-500 to-purple-600 px-4 py-3 rounded-r-lg">
+                        <i data-feather="send"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tab Contents -->
+            <div class="tab-content active" id="dashboard" data-aos="fade-up">
+                <div class="glass-card p-6 rounded-xl mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold">Today's Workout</h3>
+                        <span class="text-sm bg-blue-900 bg-opacity-30 text-blue-300 px-3 py-1 rounded-full">AI Recommended</span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <div class="w-8 h-8 rounded-full bg-blue-900 flex items-center justify-center mr-2">
+                                    <i data-feather="clock" class="text-xs"></i>
+                                </div>
+                                <h4 class="font-medium">Warm Up</h4>
+                            </div>
+                            <p class="text-gray-400 text-sm">5 minutes dynamic stretching</p>
+                        </div>
+                        <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <div class="w-8 h-8 rounded-full bg-purple-900 flex items-center justify-center mr-2">
+                                    <i data-feather="repeat" class="text-xs"></i>
+                                </div>
+                                <h4 class="font-medium">Strength</h4>
+                            </div>
+                            <p class="text-gray-400 text-sm">3 sets x 8 reps (Squats, Pushups)</p>
+                        </div>
+                        <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <div class="w-8 h-8 rounded-full bg-green-900 flex items-center justify-center mr-2">
+                                    <i data-feather="wind" class="text-xs"></i>
+                                </div>
+                                <h4 class="font-medium">Cool Down</h4>
+                            </div>
+                            <p class="text-gray-400 text-sm">5 minutes static stretching</p>
+                        </div>
+                    </div>
+                    <button class="mt-6 w-full bg-gradient-to-r from-blue-500 to-purple-600 py-3 rounded-lg font-medium flex items-center justify-center">
+                        <i data-feather="play" class="mr-2"></i> Start Workout
+                    </button>
+                </div>
+
+                <div class="glass-card p-6 rounded-xl">
+                    <h3 class="text-xl font-bold mb-4">Your Weekly Progress</h3>
+                    <div class="h-64">
+                        <!-- Chart placeholder -->
+                        <div class="w-full h-full bg-gray-800 bg-opacity-30 rounded-lg flex items-center justify-center">
+                            <p class="text-gray-400">Progress chart will appear here</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="workouts">
+                <div class="glass-card p-6 rounded-xl">
+                    <h3 class="text-xl font-bold mb-4">Available Workouts</h3>
+                    <div class="space-y-4">
+                        <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg flex items-center justify-between">
+                            <div>
+                                <h4 class="font-medium">Full Body Strength</h4>
+                                <p class="text-gray-400 text-sm">45 min • Intermediate</p>
+                            </div>
+                            <button class="bg-blue-900 bg-opacity-30 text-blue-300 p-2 rounded-full">
+                                <i data-feather="chevron-right"></i>
+                            </button>
+                        </div>
+                        <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg flex items-center justify-between">
+                            <div>
+                                <h4 class="font-medium">HIIT Cardio Blast</h4>
+                                <p class="text-gray-400 text-sm">30 min • Advanced</p>
+                            </div>
+                            <button class="bg-blue-900 bg-opacity-30 text-blue-300 p-2 rounded-full">
+                                <i data-feather="chevron-right"></i>
+                            </button>
+                        </div>
+                        <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg flex items-center justify-between">
+                            <div>
+                                <h4 class="font-medium">Yoga Flow</h4>
+                                <p class="text-gray-400 text-sm">60 min • All Levels</p>
+                            </div>
+                            <button class="bg-blue-900 bg-opacity-30 text-blue-300 p-2 rounded-full">
+                                <i data-feather="chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="nutrition">
+                <div class="glass-card p-6 rounded-xl">
+                    <h3 class="text-xl font-bold mb-4">Nutrition Plan</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-medium mb-2">Today's Macros</h4>
+                            <div class="grid grid-cols-3 gap-2 mb-2">
+                                <div class="bg-blue-900 bg-opacity-30 p-3 rounded-lg text-center">
+                                    <p class="text-sm text-blue-300">Protein</p>
+                                    <p class="font-bold">120g</p>
+                                </div>
+                                <div class="bg-purple-900 bg-opacity-30 p-3 rounded-lg text-center">
+                                    <p class="text-sm text-purple-300">Carbs</p>
+                                    <p class="font-bold">180g</p>
+                                </div>
+                                <div class="bg-green-900 bg-opacity-30 p-3 rounded-lg text-center">
+                                    <p class="text-sm text-green-300">Fats</p>
+                                    <p class="font-bold">60g</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-medium mb-2">Meal Suggestions</h4>
+                            <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                                <div class="flex items-center mb-2">
+                                    <div class="w-6 h-6 rounded-full bg-blue-900 flex items-center justify-center mr-2">
+                                        <i data-feather="sunrise" class="text-xs"></i>
+                                    </div>
+                                    <h5>Breakfast: Protein Oats</h5>
+                                </div>
+                                <p class="text-gray-400 text-sm">Oats, protein powder, almond butter, berries</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="progress">
+                <div class="glass-card p-6 rounded-xl">
+                    <h3 class="text-xl font-bold mb-4">Your Fitness Journey</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-medium mb-2">Strength Progress</h4>
+                            <div class="h-40 bg-gray-800 bg-opacity-30 rounded-lg flex items-center justify-center">
+                                <p class="text-gray-400">Strength chart will appear here</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-medium mb-2">Recent Achievements</h4>
+                            <div class="flex items-center space-x-4">
+                                <div class="bg-yellow-900 bg-opacity-30 p-3 rounded-full">
+                                    <i data-feather="award" class="text-yellow-400"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">5 Workouts in a Week</p>
+                                    <p class="text-gray-400 text-sm">Unlocked 2 days ago</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Bottom Tabs Navigation -->
+    <div class="bottom-tabs">
+        <a href="#" class="tab-btn active" data-tab="dashboard">
+            <i data-feather="home"></i>
+            <span>Home</span>
+        </a>
+        <a href="#" class="tab-btn" data-tab="workouts">
+            <i data-feather="activity"></i>
+            <span>Workouts</span>
+        </a>
+        <a href="#" class="tab-btn" data-tab="nutrition">
+            <i data-feather="heart"></i>
+            <span>Nutrition</span>
+        </a>
+        <a href="#" class="tab-btn" data-tab="progress">
+            <i data-feather="bar-chart-2"></i>
+            <span>Progress</span>
+        </a>
+    </div>
+
+    <script>
+        // Tab functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init();
+            feather.replace();
+            
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active', 'border-blue-400', 'text-blue-300'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    button.classList.add('active', 'border-blue-400', 'text-blue-300');
+                    
+                    // Show corresponding content
+                    const tabId = button.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
