@@ -42,3 +42,9 @@
     "gh-pages": "^6.3.0"
   }
 }
+
+"homepage": "https://applespro75-ui.github.io/HackathonDYP-",
+"scripts": {
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d build"
+}
