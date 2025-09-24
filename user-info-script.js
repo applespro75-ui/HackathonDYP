@@ -17,69 +17,68 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-const addMemberBtn = document.getElementById("add-member-btn");
-const membersContainer = document.getElementById("members-container");
-const submitBtn = document.getElementById("submit-btn");
-const memberTemplate = document.getElementById("member-template");
+// Wait for DOM to fully load
+document.addEventListener("DOMContentLoaded", () => {
+  const addMemberBtn = document.getElementById("add-member-btn");
+  const membersContainer = document.getElementById("members-container");
+  const submitBtn = document.getElementById("submit-btn");
+  const memberTemplate = document.getElementById("member-template");
 
-// Add new member card
-addMemberBtn.addEventListener("click", () => {
-  const clone = memberTemplate.content.cloneNode(true);
-  const newCard = clone.querySelector(".member-card");
-  membersContainer.appendChild(clone);
+  // Add first member by default
+  addMember();
 
-  // Remove button for this card only
-  newCard.querySelector(".remove-member-btn").addEventListener("click", () => {
-    newCard.remove();
-  });
-});
+  // Add new member
+  addMemberBtn.addEventListener("click", addMember);
 
-// Submit members
-submitBtn.addEventListener("click", async (e) => {
-  e.preventDefault();
+  function addMember() {
+    const clone = memberTemplate.content.cloneNode(true);
+    const newCard = clone.querySelector(".member-card");
+    membersContainer.appendChild(clone);
 
-  const userId = auth.currentUser?.uid || localStorage.getItem("userId") || "guest";
-
-  const members = [];
-  membersContainer.querySelectorAll(".member-card").forEach(card => {
-    const name = card.querySelector('input[name="name"]').value.trim();
-    const age = card.querySelector('input[name="age"]').value.trim();
-    if (!name || !age) return; // skip incomplete cards
-
-    members.push({
-      userId,
-      name,
-      gender: card.querySelector('select[name="gender"]').value,
-      age,
-      workout_time: card.querySelector('select[name="workout_time"]').value,
-      medical: card.querySelector('input[name="medical"]').value,
-      createdAt: serverTimestamp()
-    });
-  });
-
-  if (members.length === 0) {
-    alert("Add at least one complete member before submitting!");
-    return;
+    // Remove button
+    const removeBtn = newCard.querySelector(".remove-member-btn");
+    removeBtn.addEventListener("click", () => newCard.remove());
   }
 
-  try {
-    // Save to Firebase
-    for (const m of members) {
-      await addDoc(collection(db, "members"), m);
+  // Submit members
+  submitBtn.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    const userId = auth.currentUser?.uid || localStorage.getItem("userId") || "guest";
+    const members = [];
+
+    membersContainer.querySelectorAll(".member-card").forEach(card => {
+      const name = card.querySelector('input[name="name"]').value.trim();
+      const age = card.querySelector('input[name="age"]').value.trim();
+      if (!name || !age) return;
+
+      members.push({
+        userId,
+        name,
+        gender: card.querySelector('select[name="gender"]').value,
+        age,
+        workout_time: card.querySelector('select[name="workout_time"]').value,
+        medical: card.querySelector('input[name="medical"]').value,
+        createdAt: serverTimestamp()
+      });
+    });
+
+    if (members.length === 0) {
+      alert("Add at least one complete member before submitting!");
+      return;
     }
 
-    // Optional: call backend API if needed
-    // await fetch("https://fitness-backend.onrender.com/api/generate-plan", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ members })
-    // });
+    try {
+      for (const m of members) {
+        await addDoc(collection(db, "members"), m);
+      }
 
-    localStorage.setItem("members", JSON.stringify(members));
-    alert("✅ Members saved successfully!");
-    window.location.href = "interface.html"; // redirect
-  } catch (err) {
-    console.error("Error saving members:", err);
-    alert("❌ Failed to save members. Check console.");
-  }
+      localStorage.setItem("members", JSON.stringify(members));
+      alert("✅ Members saved successfully!");
+      window.location.href = "interface.html";
+    } catch (err) {
+      console.error("Error saving members:", err);
+      alert("❌ Failed to save members. Check console.");
+    }
+  });
 });
