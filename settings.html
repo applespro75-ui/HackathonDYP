@@ -215,6 +215,14 @@
             AOS.init();
             feather.replace();
         });
+
+          try {
+    const response = await fetch("https://fitness-backend.onrender.com/api/generate-plan", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ members, preferences })
+    });
+              
     </script>
 </body>
 </html>
