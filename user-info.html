@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Information</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h1 class="gradient-text">🏋️ Fitness Members Info</h1>
+    <p>Add members and their details below:</p>
+
+    <div id="members-container"></div>
+
+    <div class="buttons">
+      <button id="add-member-btn" class="btn btn-primary"><i class="fas fa-user-plus"></i> Add Member</button>
+      <button id="submit-btn" class="btn btn-success"><i class="fas fa-paper-plane"></i> Submit</button>
+    </div>
+  </div>
+
+  <template id="member-template">
+    <div class="member-card">
+      <div class="member-header"><i class="fas fa-dumbbell"></i> <h3>Member</h3></div>
+
+      <label>Name:</label>
+      <input type="text" name="name" placeholder="Enter name" required>
+
+      <label>Gender:</label>
+      <select name="gender">
+        <option value="">Select Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label>Age:</label>
+      <input type="number" name="age" min="1" placeholder="Enter age" required>
+
+      <label>Workout Preference Time:</label>
+      <select name="workout_time">
+        <option value="">Select time</option>
+        <option value="morning">Morning (6AM - 9AM)</option>
+        <option value="afternoon">Afternoon (12PM - 3PM)</option>
+        <option value="evening">Evening (5PM - 8PM)</option>
+      </select>
+
+      <label>Medical Issue:</label>
+      <input type="text" name="medical" placeholder="e.g., None / Diabetes / Heart">
+
+      <button class="remove-member-btn btn btn-outline"><i class="fas fa-trash"></i> Remove Member</button>
+    </div>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
