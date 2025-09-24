@@ -1,101 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Fitness Plan</title>
-    <!-- Tailwind CSS CDN for styling -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spark Fitness - Goals</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-        
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: #000000;
             color: #ffffff;
+            min-height: 100vh;
+            margin: 0;
+            padding-bottom: 60px;
         }
-
-        /* Styling for the animated hamburger icon */
-        .hamburger-icon span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background-color: #ffffff;
-            border-radius: 5px;
-            transition: all 0.3s ease-in-out;
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
         }
-        .hamburger-icon span:nth-child(2) {
-            margin: 4px 0;
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
-        
-        /* Animation states for the icon */
-        .hamburger-icon.open span:nth-child(1) {
-            transform: translateY(7px) rotate(45deg);
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
         }
-        .hamburger-icon.open span:nth-child(2) {
-            opacity: 0;
+        header .logo-section {
+            display: flex;
+            align-items: center;
         }
-        .hamburger-icon.open span:nth-child(3) {
-            transform: translateY(-7px) rotate(-45deg);
+        header .logo-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(90deg, #7c3aed, #3b82f6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 1rem;
         }
-
-        /* Styling for the menu overlay */
-        .menu-overlay {
+        h1.site-title {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #7c3aed, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+        .header-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        .header-buttons a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .header-buttons a .glass-card {
+            width: 48px;
+            height: 48px;
+            justify-content: center;
+            border-radius: 50%;
+            padding: 0;
+        }
+        .bottom-tabs {
             position: fixed;
-            top: 0;
+            bottom: 0;
             left: 0;
+            right: 0;
+            background: #111;
+            border-top: 1px solid #333;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            z-index: 50;
+        }
+        .tab-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #888;
+            text-decoration: none;
+            font-size: 12px;
+            transition: color 0.3s ease;
+        }
+        .tab-btn:hover {
+            color: #60a5fa;
+        }
+        .tab-btn.active {
+            color: #60a5fa;
+        }
+        .tab-btn i {
+            margin-bottom: 4px;
+        }
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        /* Style for the custom checkbox labels */
+        input[type="checkbox"][name="days"] + span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 50;
-            transform: translateX(100%);
-            transition: transform 0.4s ease-in-out;
+            transition: color 0.2s ease;
         }
-        .menu-overlay.show {
-            transform: translateX(0);
+        input[type="checkbox"][name="days"]:checked + span {
+            color: #fff;
+        }
+        input[type="checkbox"].peer:checked + span {
+            color: #fff;
         }
     </style>
 </head>
 <body class="bg-black text-white">
 
-    <!-- Header with logo and hamburger menu -->
-    <header class="flex justify-between items-center p-6">
-        <div class="flex items-center space-x-3">
-            <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-            </svg>
-            <h1 class="text-2xl font-extrabold bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text">Spark Fitness</h1>
-        </div>
-        <button id="menu-toggle" class="z-50 focus:outline-none">
-            <div class="hamburger-icon flex flex-col justify-center items-center">
-                <span></span>
-                <span></span>
-                <span></span>
+    <header>
+        <div class="logo-section">
+            <div class="logo-circle">
+                <i data-feather="bolt" class="text-white"></i>
             </div>
-        </button>
+            <h1 class="site-title">Spark Fitness</h1>
+        </div>
+        <div class="header-buttons">
+            <a href="profile.html" aria-label="Profile">
+                <div class="glass-card">
+                    <i data-feather="user"></i>
+                </div>
+            </a>
+            <a href="settings.html" aria-label="Settings">
+                <div class="glass-card">
+                    <i data-feather="settings"></i>
+                </div>
+            </a>
+        </div>
     </header>
 
-    <!-- Full-screen Menu Overlay -->
-    <div id="menu-overlay" class="menu-overlay flex flex-col items-center justify-center space-y-8">
-        <a href="home.html" class="text-4xl font-bold text-gray-300 hover:text-white transition-colors">Home</a>
-        <a href="goals.html" class="text-4xl font-bold text-blue-400 hover:text-white transition-colors">Goals</a>
-        <a href="badges.html" class="text-4xl font-bold text-gray-300 hover:text-white transition-colors">Badges</a>
-        <a href="progress.html" class="text-4xl font-bold text-gray-300 hover:text-white transition-colors">Progress</a>
-    </div>
-
-    <!-- Main Content Container -->
-    <div class="container max-w-2xl mx-auto px-6 py-12">
+    <div class="container mx-auto px-6 py-12">
         <div class="text-center mb-12">
             <h1 class="text-4xl sm:text-5xl font-extrabold bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text">
                 User Lifestyle & Preferences
             </h1>
             <p class="mt-4 text-gray-400">Your information helps our AI create a perfect plan for you.</p>
         </div>
-        
-        <!-- User Info Form -->
+
         <form id="planForm" class="space-y-8">
-            <!-- Lifestyle Section -->
             <div class="section bg-zinc-900 rounded-2xl p-6 border border-zinc-800">
                 <h2 class="text-2xl font-semibold mb-6 pb-2 border-b-2 border-blue-600">Lifestyle</h2>
                 <div class="space-y-6">
@@ -125,7 +188,6 @@
                 </div>
             </div>
 
-            <!-- Goals Section -->
             <div class="section bg-zinc-900 rounded-2xl p-6 border border-zinc-800">
                 <h2 class="text-2xl font-semibold mb-6 pb-2 border-b-2 border-blue-600">Goals</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -152,7 +214,6 @@
                 </div>
             </div>
 
-            <!-- Preferences Section -->
             <div class="section bg-zinc-900 rounded-2xl p-6 border border-zinc-800">
                 <h2 class="text-2xl font-semibold mb-6 pb-2 border-b-2 border-blue-600">Preferences</h2>
                 <div class="space-y-6">
@@ -183,31 +244,37 @@
                 </div>
             </div>
 
-            <!-- Schedule Section -->
             <div class="section bg-zinc-900 rounded-2xl p-6 border border-zinc-800">
                 <h2 class="text-2xl font-semibold mb-6 pb-2 border-b-2 border-blue-600">Schedule</h2>
                 <p class="text-gray-300 mb-4">Select the days you are available:</p>
                 <div class="days grid grid-cols-2 sm:grid-cols-4 gap-2">
-                    <label class="p-3 text-center rounded-lg border border-zinc-700 bg-zinc-800 transition-colors cursor-pointer hover:bg-zinc-700">
-                        <input type="checkbox" name="days" value="Monday" class="hidden"> Mon
+                    <label class="flex items-center justify-center p-3 text-center rounded-lg border border-zinc-700 bg-zinc-800 transition-colors cursor-pointer hover:bg-zinc-700 has-[:checked]:bg-gradient-to-r has-[:checked]:from-blue-600 has-[:checked]:to-purple-600">
+                        <input type="checkbox" name="days" value="Monday" class="peer absolute opacity-0">
+                        <span class="text-white">Mon</span>
                     </label>
-                    <label class="p-3 text-center rounded-lg border border-zinc-700 bg-zinc-800 transition-colors cursor-pointer hover:bg-zinc-700">
-                        <input type="checkbox" name="days" value="Tuesday" class="hidden"> Tue
+                    <label class="flex items-center justify-center p-3 text-center rounded-lg border border-zinc-700 bg-zinc-800 transition-colors cursor-pointer hover:bg-zinc-700 has-[:checked]:bg-gradient-to-r has-[:checked]:from-blue-600 has-[:checked]:to-purple-600">
+                        <input type="checkbox" name="days" value="Tuesday" class="peer absolute opacity-0">
+                        <span class="text-white">Tue</span>
                     </label>
-                    <label class="p-3 text-center rounded-lg border border-zinc-700 bg-zinc-800 transition-colors cursor-pointer hover:bg-zinc-700">
-                        <input type="checkbox" name="days" value="Wednesday" class="hidden"> Wed
+                    <label class="flex items-center justify-center p-3 text-center rounded-lg border border-zinc-700 bg-zinc-800 transition-colors cursor-pointer hover:bg-zinc-700 has-[:checked]:bg-gradient-to-r has-[:checked]:from-blue-600 has-[:checked]:to-purple-600">
+                        <input type="checkbox" name="days" value="Wednesday" class="peer absolute opacity-0">
+                        <span class="text-white">Wed</span>
                     </label>
-                    <label class="p-3 text-center rounded-lg border border-zinc-700 bg-zinc-800 transition-colors cursor-pointer hover:bg-zinc-700">
-                        <input type="checkbox" name="days" value="Thursday" class="hidden"> Thu
+                    <label class="flex items-center justify-center p-3 text-center rounded-lg border border-zinc-700 bg-zinc-800 transition-colors cursor-pointer hover:bg-zinc-700 has-[:checked]:bg-gradient-to-r has-[:checked]:from-blue-600 has-[:checked]:to-purple-600">
+                        <input type="checkbox" name="days" value="Thursday" class="peer absolute opacity-0">
+                        <span class="text-white">Thu</span>
                     </label>
-                    <label class="p-3 text-center rounded-lg border border-zinc-700 bg-zinc-800 transition-colors cursor-pointer hover:bg-zinc-700">
-                        <input type="checkbox" name="days" value="Friday" class="hidden"> Fri
+                    <label class="flex items-center justify-center p-3 text-center rounded-lg border border-zinc-700 bg-zinc-800 transition-colors cursor-pointer hover:bg-zinc-700 has-[:checked]:bg-gradient-to-r has-[:checked]:from-blue-600 has-[:checked]:to-purple-600">
+                        <input type="checkbox" name="days" value="Friday" class="peer absolute opacity-0">
+                        <span class="text-white">Fri</span>
                     </label>
-                    <label class="p-3 text-center rounded-lg border border-zinc-700 bg-zinc-800 transition-colors cursor-pointer hover:bg-zinc-700">
-                        <input type="checkbox" name="days" value="Saturday" class="hidden"> Sat
+                    <label class="flex items-center justify-center p-3 text-center rounded-lg border border-zinc-700 bg-zinc-800 transition-colors cursor-pointer hover:bg-zinc-700 has-[:checked]:bg-gradient-to-r has-[:checked]:from-blue-600 has-[:checked]:to-purple-600">
+                        <input type="checkbox" name="days" value="Saturday" class="peer absolute opacity-0">
+                        <span class="text-white">Sat</span>
                     </label>
-                    <label class="p-3 text-center rounded-lg border border-zinc-700 bg-zinc-800 transition-colors cursor-pointer hover:bg-zinc-700">
-                        <input type="checkbox" name="days" value="Sunday" class="hidden"> Sun
+                    <label class="flex items-center justify-center p-3 text-center rounded-lg border border-zinc-700 bg-zinc-800 transition-colors cursor-pointer hover:bg-zinc-700 has-[:checked]:bg-gradient-to-r has-[:checked]:from-blue-600 has-[:checked]:to-purple-600">
+                        <input type="checkbox" name="days" value="Sunday" class="peer absolute opacity-0">
+                        <span class="text-white">Sun</span>
                     </label>
                 </div>
                 
@@ -227,26 +294,34 @@
             </button>
         </form>
 
-        <!-- AI Generated Plan Section -->
         <div id="aiPlanSection" class="ai-plan hidden mt-8 p-6 bg-zinc-900 rounded-xl border-l-4 border-blue-500 shadow-xl">
             <h2 class="text-2xl font-bold text-blue-400 mb-4">Your Personalized Fitness Plan</h2>
             <div id="aiPlanOutput" class="text-gray-300 leading-relaxed"></div>
         </div>
     </div>
 
-    <!-- JavaScript to handle form submission and hamburger menu -->
+    <nav class="bottom-tabs" role="navigation" aria-label="Main navigation">
+        <a href="home.html" class="tab-btn" aria-label="Home">
+            <i data-feather="home"></i>
+            <span>Home</span>
+        </a>
+        <a href="goals.html" class="tab-btn active" aria-label="Goals" aria-current="page">
+            <i data-feather="activity"></i>
+            <span>Goals</span>
+        </a>
+        <a href="badge.html" class="tab-btn" aria-label="Badges">
+            <i data-feather="award"></i>
+            <span>Badges</span>
+        </a>
+        <a href="progress.html" class="tab-btn" aria-label="Progress">
+            <i data-feather="bar-chart-2"></i>
+            <span>Progress</span>
+        </a>
+    </nav>
+
     <script>
-        // Hamburger Menu Logic
-        const menuToggle = document.getElementById('menu-toggle');
-        const menuOverlay = document.getElementById('menu-overlay');
-        const hamburgerIcon = document.querySelector('.hamburger-icon');
+        feather.replace();
 
-        menuToggle.addEventListener('click', () => {
-            menuOverlay.classList.toggle('show');
-            hamburgerIcon.classList.toggle('open');
-        });
-
-        // Form Submission Logic
         document.getElementById("planForm").addEventListener("submit", async function (e) {
             e.preventDefault();
 
@@ -280,16 +355,23 @@
             console.log("📤 Sending to backend:", { members, preferences });
 
             try {
-                // Call backend API
-                const response = await fetch("http://localhost:5000/api/generate-plan", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ members, preferences })
-                });
+                // This is a mock API call since I don't have access to a real backend.
+                // Replace this with your actual fetch call to a server endpoint.
+                
+                const mockPlan = {
+                    Monday: "30-minute HIIT workout targeting full body. Focus on high-intensity intervals.",
+                    Tuesday: "Rest day or light active recovery. Go for a 20-minute walk or do a gentle yoga flow.",
+                    Wednesday: "45-minute Strength Training session. Focus on squats, deadlifts, and overhead presses.",
+                    Thursday: "30-minute Yoga for Flexibility. Hold poses longer to deepen stretches and improve range of motion.",
+                    Friday: "40-minute Cardio workout. A brisk run or a cycling session at a medium intensity.",
+                    Saturday: "Active Recovery. Spend 60 minutes on an activity you enjoy, like hiking or swimming.",
+                    Sunday: "Complete Rest. Prioritize sleep and mental wellness to prepare for the week ahead."
+                };
 
-                if (!response.ok) throw new Error("Failed to fetch AI plan");
+                // Simulate a network delay
+                await new Promise(resolve => setTimeout(resolve, 1000));
 
-                const aiPlan = await response.json();
+                const aiPlan = mockPlan;
 
                 console.log("✅ AI Plan received:", aiPlan);
 
@@ -300,13 +382,16 @@
 
                 Object.entries(aiPlan).forEach(([day, task]) => {
                     const p = document.createElement("p");
-                    p.textContent = `${day}: ${task}`;
+                    p.innerHTML = `<span class="font-bold text-blue-300">${day}:</span> ${task}`;
                     planOutput.appendChild(p);
                 });
 
                 planSection.classList.remove("hidden");
             } catch (err) {
                 console.error("❌ Error:", err);
+                const planOutput = document.getElementById("aiPlanOutput");
+                planOutput.innerHTML = "<p class='text-red-500'>Failed to generate a plan. Please try again later.</p>";
+                document.getElementById("aiPlanSection").classList.remove("hidden");
             }
         });
     </script>
