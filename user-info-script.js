@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebas
 import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-// Replace with your Firebase config
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCyMUrKQNX6-clW4wsaDiDeGC4HRdJfvrE",
   authDomain: "hackathon-app-c790e.firebaseapp.com",
@@ -42,35 +42,44 @@ submitBtn.addEventListener("click", async (e) => {
 
   const members = [];
   membersContainer.querySelectorAll(".member-card").forEach(card => {
-    const member = {
+    const name = card.querySelector('input[name="name"]').value.trim();
+    const age = card.querySelector('input[name="age"]').value.trim();
+    if (!name || !age) return; // skip incomplete cards
+
+    members.push({
       userId,
-      name: card.querySelector('input[name="name"]').value,
+      name,
       gender: card.querySelector('select[name="gender"]').value,
-      age: card.querySelector('input[name="age"]').value,
+      age,
       workout_time: card.querySelector('select[name="workout_time"]').value,
       medical: card.querySelector('input[name="medical"]').value,
       createdAt: serverTimestamp()
-    };
-    members.push(member);
+    });
   });
 
-    try {
-    const response = await fetch("https://fitness-backend.onrender.com/api/generate-plan", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ members, preferences })
-    });
+  if (members.length === 0) {
+    alert("Add at least one complete member before submitting!");
+    return;
+  }
 
   try {
+    // Save to Firebase
     for (const m of members) {
       await addDoc(collection(db, "members"), m);
     }
-    alert("✅ Members saved to Firestore!");
+
+    // Optional: call backend API if needed
+    // await fetch("https://fitness-backend.onrender.com/api/generate-plan", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({ members })
+    // });
+
     localStorage.setItem("members", JSON.stringify(members));
-    window.location.href = "interface.html";
+    alert("✅ Members saved successfully!");
+    window.location.href = "interface.html"; // redirect
   } catch (err) {
     console.error("Error saving members:", err);
     alert("❌ Failed to save members. Check console.");
   }
 });
-
