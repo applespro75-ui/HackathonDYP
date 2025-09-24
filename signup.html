@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AuraFit AI - Sign Up</title>
+    <title>Spark Fitness AI - Sign Up</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -147,6 +147,12 @@
                 });
 
                 showMessage('Account created successfully!', false);
+                
+                // Redirect to the login page after a short delay
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000); // 2-second delay
+
             } catch (error) {
                 showMessage(error.message, true);
             }
